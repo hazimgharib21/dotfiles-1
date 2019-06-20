@@ -170,6 +170,9 @@ nnoremap j jzz
 nnoremap k kzz
 set scrolloff=0
 
+" clear highlighting when searching
+nmap <silent> ,/ :nohlsearch<cr>
+
 " Windows navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
