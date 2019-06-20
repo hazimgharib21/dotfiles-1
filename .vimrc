@@ -41,6 +41,8 @@ Plugin 'erisian/rest_tools'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ludovicchabant/vim-lawrencium'
+Plugin 'universal-ctags/ctags'
+Plugin 'junegunn/goyo.vim'
 
 
 " All of your Plugins must be added before the following line
@@ -58,11 +60,6 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-
-" Inherit aliases from ~/.bash_aliases
-let $BASH_ENV = "~/.bash_aliases"
-
-
 " Switch to a color scheme for dark background
 set background=dark
 
@@ -73,7 +70,6 @@ highlight DiffText term=reverse cterm=bold ctermbg=124 gui=bold guibg=Red3
 highlight Pmenu ctermbg=brown ctermfg=black
 highlight PmenuSel ctermbg=green
 
-
 " Prevent auto-indenting of comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
@@ -82,7 +78,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " Open each buffer in its own tabpage
 "au BufAdd,BufNewFile * nested tab sball
-
 
 " Some tuning
 set showmatch		" Show matching brackets.
@@ -106,6 +101,7 @@ set wildignore=*.o,*.class,*.swp,*.swo,*.pyc
 
 " Use tree view for netrw directory browsing
 let g:netrw_liststyle=3
+let g:netrw_banner=0
 
 " CtrlSpace config
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
@@ -156,23 +152,33 @@ let g:UltiSnipsExpandTrigger = '<TAB>'
 let g:UltiSnipsJumpForwardTrigger = '<TAB>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-TAB>'
 
-
 " Import mswin key mappings and behavior.
 source $VIMRUNTIME/mswin.vim
+
+" Leader mapping
+let mapleader = ","
+
+" toggle goyo
+nmap <leader>g :Goyo<cr>
+
+" autoformat
+nmap <leader>f :Autoformat<cr>
+
+" center the scroll line
+" may jump if scroll line at bottom or top
+nnoremap j jzz
+nnoremap k kzz
+set scrolloff=0
+
+" Windows navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " Unmap CTRL-Y(redo) to its original scroll
 nunmap <C-Y>
 iunmap <C-Y>
-
-" Tap CTRL-S twice for save and exit, also in Insert mode
-"noremap <C-S><C-S>		:wq<CR>
-"vnoremap <C-S><C-S>		<C-C>:wq<CR>
-"inoremap <C-S><C-S>		<C-O>:wq<CR>
-
-" Tap CTRL-W twice for exit, also in Insert mode
-"noremap <C-W><C-W>		:q!<CR>
-"vnoremap <C-W><C-W>		<C-C>:q!<CR>
-"inoremap <C-W><C-W>		<C-O>:q!<CR>
 
 " Insert mode shortcuts
 inoremap II		<Esc>I
@@ -267,3 +273,5 @@ inoremap <Right>	<NOP>
 " Disable Execute Mode
 nmap Q	<NOP>
 
+" Goyo config
+let g:goyo_linenr=1
