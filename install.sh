@@ -20,7 +20,7 @@ echo ""
 CUR_DIR=$(pwd)
 echo $CUR_DIR
 
-rsync -rvh --stats --progress --include ".*" . ~/
+rsync -rvh --stats --progress --exclude "*.sh" --exclude "*.md" --include ".*" . ~/
 
 echo "Installing vim plugin"
 echo "---------------------------"
