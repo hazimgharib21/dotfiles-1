@@ -35,7 +35,7 @@ echo ""
 
 CUR_DIR=$(pwd)
 cd $CUR_DIR
-rsync -rvh --stats --progress --exclude "*.sh" --exclude "*.md" --include ".*" . ~/
+rsync -rvh --stats --progress --exclude "*.sh" --exclude "*.md" --exclude ".git/" --include ".*" . ~/
 
 echo "Installing vim plugin..."
 echo "---------------------------"
@@ -54,7 +54,10 @@ echo "Completing other configuration..."
 echo "---------------------------"
 echo ""
 
-pip install autopep8
+sudo chown -R $USER /usr/local/lib
+sudo chown -R $USER /usr/local/
+
+pip install --user autopep8
 npm install -g js-beautify@1.6.12
 cd /tmp
 wget http://downloads.sourceforge.net/project/astyle/astyle/astyle%203.1/astyle_3.1_linux.tar.gz
@@ -63,11 +66,7 @@ cd /tmp/astyle/build/gcc
 make
 sudo make install
 cd ~
-update-alternatives --set editor /usr/bin/vim.nox
-
-sh -c "echo 'Asia/Kuala_Lumpur' > /etc/timezone"
-dpkg-reconfigure --frontend noninteractive tzdata
-ntpdate ntp.ubuntu.com
+sudo update-alternatives --set editor /usr/bin/vim.nox
 
 echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$USER
 sudo chmod 0400 /etc/sudoers.d/$USER
