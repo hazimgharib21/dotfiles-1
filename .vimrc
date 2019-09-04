@@ -168,7 +168,6 @@ nmap <leader>f :Autoformat<cr>
 " may jump if scroll line at bottom or top
 nnoremap j jzz
 nnoremap k kzz
-set scrolloff=0
 
 " clear highlighting when searching
 nmap <silent> ,/ :nohlsearch<cr>
@@ -278,3 +277,9 @@ nmap Q	<NOP>
 
 " Goyo config
 let g:goyo_linenr=1
+
+augroup VCenterCursor
+  au!
+  au BufEnter,WinEnter,WinNew,VimResized *,*.*
+          \ let &scrolloff=winheight(win_getid())/2
+augroup END
