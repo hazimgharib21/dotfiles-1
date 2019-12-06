@@ -36,7 +36,6 @@ Plugin 'Chiel92/vim-autoformat'
 "Plugin 'justmao945/vim-clang'
 "Plugin 'Valloric/YouCompleteMe'
 Plugin 'ervandew/supertab'
-Plugin 'SirVer/ultisnips'
 Plugin 'erisian/rest_tools'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'tpope/vim-fugitive'
@@ -146,17 +145,12 @@ let g:ycm_semantic_triggers = {
 \   'rosmsg,rossrv,rosaction': ['re!^'],
 \ }
 
-" SuperTab and UltiSnips config
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:UltiSnipsExpandTrigger = '<TAB>'
-let g:UltiSnipsJumpForwardTrigger = '<TAB>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-TAB>'
-
 " Import mswin key mappings and behavior.
 source $VIMRUNTIME/mswin.vim
 
 " Leader mapping
 let mapleader = ","
+
 
 " toggle goyo
 nmap <leader>g :Goyo<cr>
@@ -164,10 +158,6 @@ nmap <leader>g :Goyo<cr>
 " autoformat
 nmap <leader>f :Autoformat<cr>
 
-" center the scroll line
-" may jump if scroll line at bottom or top
-nnoremap j jzz
-nnoremap k kzz
 
 " clear highlighting when searching
 nmap <silent> ,/ :nohlsearch<cr>
@@ -278,8 +268,8 @@ nmap Q	<NOP>
 " Goyo config
 let g:goyo_linenr=1
 
-augroup VCenterCursor
-  au!
-  au BufEnter,WinEnter,WinNew,VimResized *,*.*
-          \ let &scrolloff=winheight(win_getid())/2
-augroup END
+" center the scroll line
+" may jump if scroll line at bottom or top
+nnoremap j jzz
+nnoremap k kzz
+
