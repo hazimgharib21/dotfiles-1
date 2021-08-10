@@ -1,66 +1,105 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" ***************************************** Vundle Start ************************************
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+Plugin 'preservim/tagbar'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
-
-Plugin 'tpope/vim-sensible'
-Plugin 'djoshea/vim-autoread'
-Plugin 'terryma/vim-smooth-scroll'
-Plugin 'szw/vim-ctrlspace'
-"Plugin 'taketwo/vim-ros'
 Plugin 'Chiel92/vim-autoformat'
+"Plugin 'tpope/vim-sensible'
+"Plugin 'djoshea/vim-autoread'
+"Plugin 'terryma/vim-smooth-scroll'
+"Plugin 'szw/vim-ctrlspace'
+"Plugin 'taketwo/vim-ros'
 "Plugin 'scrooloose/syntastic'
 "Plugin 'justmao945/vim-clang'
 "Plugin 'Valloric/YouCompleteMe'
-Plugin 'ervandew/supertab'
-Plugin 'erisian/rest_tools'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'tpope/vim-fugitive'
-Plugin 'ludovicchabant/vim-lawrencium'
-Plugin 'universal-ctags/ctags'
-Plugin 'junegunn/goyo.vim'
+"Plugin 'ervandew/supertab'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'erisian/rest_tools'
+"Plugin 'dhruvasagar/vim-table-mode'
+"Plugin 'rodjek/vim-puppet'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'ludovicchabant/vim-lawrencium'
+"Plugin 'universal-ctags/ctags'
+"Plugin 'junegunn/goyo.vim'
 
-
-" All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
-" Switch to a color scheme for dark background
-set background=dark
+" ***************************************** Vundle End ************************************
+
+
+" Sets how many lines of history VIM has to remember
+set history=500
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * checktime
+
+set path+=**
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" Display all matching files when tab complete
+set wildmenu
+
+" Always show current position
+set ruler
+
+" Height of command bar
+set cmdheight=1
+
+" A buffer becomes hidden when it is abandoned
+set hid
+
+" Configure backspace to act as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" incremental search
+set incsearch
+
+" Don't redraw while executing macros
+set lazyredraw
+
+" Show matching brackets
+set showmatch
+
+" no annoying sound errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+" Enable syntax highlighting
+syntax enable
+
+if $COLORTERM == 'gnome-terminal'
+  set t_Co=256
+endif
+
+try
+  colorscheme desert
+catch
+endtry
 
 " Fix diff color scheme
 highlight DiffText term=reverse cterm=bold ctermbg=124 gui=bold guibg=Red3
@@ -69,38 +108,94 @@ highlight DiffText term=reverse cterm=bold ctermbg=124 gui=bold guibg=Red3
 highlight Pmenu ctermbg=brown ctermfg=black
 highlight PmenuSel ctermbg=green
 
-" Prevent auto-indenting of comments
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" Switch to a color scheme for dark background
+set background=dark
+
+" set utf8 as standard encoding
+set encoding=utf-8
+
+" turn of backup
+set nobackup
+set nowb
+set noswapfile
+
+" use space instead of tabs
+set expandtab
+
+" be smart when using tabs
+set smarttab
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" linebreak on 500 character
+set lbr
+set tw=500
+
+" set auto indent, smart indent and wrap lines
+set ai
+set si
+set wrap
+
+" always show the status line
+set laststatus=2
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+
+" search current selection using * and #
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 " Let Vim jump to the last position when reopening a file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" Open each buffer in its own tabpage
-"au BufAdd,BufNewFile * nested tab sball
+" 0 will move curser to first non-blank character
+map 0 ^
 
-" Some tuning
-set showmatch		" Show matching brackets.
-set ignorecase		" Do case insensitive matching
-set smartcase		" Do smart case matching
-set mouse=a			" Enable mouse usage (all modes)
-set ruler
+" Delete trailing white space on save
+fun! CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+if has("autocmd")
+    autocmd BufWritePre *.txt,*.js,*.py,*.sh :call CleanExtraSpaces()
+endif
+
+" clear highlighting when searching
+map <silent> <leader>/ :noh<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Prevent auto-indenting of comments
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Search down into subfolders
+" Provides tab completion for all file-related tasks
+set path+=**
+
+" Enable mouse usage
+set mouse=a
 set number
 set splitbelow
 set splitright
-set hidden
-" Tabs settings
-set expandtab
-set softtabstop=0
-set shiftwidth=2
-set tabstop=2
+
+set cursorline
+hi CursorLine cterm=NONE ctermbg=8 ctermfg=None guibg=darkred guifg=white
+"hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
 " Make tab completion in command mode behave like in Bash
-set wildmenu
 set wildmode=longest,list
 set wildignore=*.o,*.class,*.swp,*.swo,*.pyc
 
 " Use tree view for netrw directory browsing
-let g:netrw_liststyle=3
 let g:netrw_banner=0
+let g:netrw_browse_split=4 " open in prior window
+let g:netrw_altv=1         " open splits to the right
+let g:netrw_liststyle=3    " tree view
 
 " CtrlSpace config
 let g:CtrlSpaceSaveWorkspaceOnExit = 1
@@ -139,7 +234,7 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_key_list_select_completion = ['<C-n>']		" Disable <Down> and <TAB> key
 let g:ycm_key_list_previous_completion = ['<C-p>']	" Disable <Up> and <S-TAB> key
 
-" Associates triggers with ROS filetypes
+" Associates triggers with ROS filetype5
 let g:ycm_semantic_triggers = {
 \   'roslaunch': ['="', '$(', '/'],
 \   'rosmsg,rossrv,rosaction': ['re!^'],
@@ -148,19 +243,8 @@ let g:ycm_semantic_triggers = {
 " Import mswin key mappings and behavior.
 source $VIMRUNTIME/mswin.vim
 
-" Leader mapping
-let mapleader = ","
-
-
-" toggle goyo
-nmap <leader>g :Goyo<cr>
-
 " autoformat
 nmap <leader>f :Autoformat<cr>
-
-
-" clear highlighting when searching
-nmap <silent> ,/ :nohlsearch<cr>
 
 " Windows navigation
 nnoremap <C-J> <C-W><C-J>
@@ -171,11 +255,6 @@ nnoremap <C-H> <C-W><C-H>
 " Unmap CTRL-Y(redo) to its original scroll
 nunmap <C-Y>
 iunmap <C-Y>
-
-" Insert mode shortcuts
-inoremap II		<Esc>I
-inoremap AA		<Esc>A
-inoremap OO		<Esc>O
 
 " Move by virtual lines when used without a count
 noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -199,18 +278,18 @@ noremap Y y$
 noremap gr gT
 
 " Allows you to easily replace the current word and all its occurrences.
-nnoremap <Leader>rc :%s/\<<C-r><C-w>\>/
-vnoremap <Leader>rc y:%s/<C-r>"/
+nnoremap <>rc :%s/\<<C-r><C-w>\>/
+vnoremap <>rc y:%s/<C-r>"/
 
 " Allows you to easily change the current word and all occurrences to something
 " else. The difference between this and the previous mapping is that the mapping
 " below pre-fills the current word for you to change.
-nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
-vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
+nnoremap <>cc :%s/\<<C-r><C-w>\>/<C-r><C-w>
+vnoremap <>cc y:%s/<C-r>"/<C-r>"
 
 " Allow you to easily search the current word.
-nnoremap <Leader>ff /\<<C-r><C-w>\><CR>
-vnoremap <Leader>ff y/<C-r>"<CR>
+nnoremap <>ff /\<<C-r><C-w>\><CR>
+vnoremap <>ff y/<C-r>"<CR>
 
 " Diff shortcuts
 noremap <leader>df :call DiffToggle()<CR>
@@ -234,10 +313,6 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 " ROS shortcuts
 noremap <F10> :make!<CR>
 
-" AutoFormat shortcuts
-"noremap <F3> :Autoformat<CR><CR>
-noremap <leader>af :Autoformat<CR>
-
 " Remove trailing whitespaces
 noremap <leader>as :%s/\s\+$//e<CR>
 
@@ -252,24 +327,47 @@ nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>gt :YcmCompleter GetType<CR>
 nnoremap <leader>gr :YcmForceCompileAndDiagnostics<CR>
 
-" Hard mode - disable arrow keys
-map <Up>	 :echo "no!"<cr>
-map <Down>	 :echo "no!"<cr>
-map <Left>	 :echo "no!"<cr>
-map <Right>	 :echo "no!"<cr>
-inoremap <Up>		<NOP>
-inoremap <Down>		<NOP>
-inoremap <Left>		<NOP>
-inoremap <Right>	<NOP>
+noremap <Left> :vertical resize +1<CR>
+noremap <Right> :vertical resize -1<CR>
+noremap <Up> :resize +1<CR>
+noremap <Down> :resize -1<CR>
 
 " Disable Execute Mode
 nmap Q	<NOP>
-
-" Goyo config
-let g:goyo_linenr=1
 
 " center the scroll line
 " may jump if scroll line at bottom or top
 nnoremap j jzz
 nnoremap k kzz
+
+nmap T :TagbarToggle<CR>
+let g:tagbar_width = 20
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
+
+" Helper Function
+
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    endif
+    return ''
+endfunction
+
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
 

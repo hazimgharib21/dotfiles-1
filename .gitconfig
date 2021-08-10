@@ -51,3 +51,7 @@
 
 [rebase]
   autoStash = true
+
+[user]
+    email = hazimgharib21@gmail.com
+    name = hazimgharib21
