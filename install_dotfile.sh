@@ -1,4 +1,4 @@
-#!tbin/bash
+#!/bin/bash
 
 CUR_DIR=$(pwd)
 
@@ -17,7 +17,7 @@ echo ""
 cp .vimrc ~/.vimrc
 cp .byobu/keybindings.tmux ~/.byobu/keybindings.tmux
 cp .byobu/.tmux.conf ~/.byobu/.tmux.conf
-cp .vim/ftplugin/ ~/.vim/
+cp -r .vim/ftplugin/ ~/.vim/
 
 echo "Installing Vundle"
 echo "---------------------------"
